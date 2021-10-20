@@ -23,8 +23,8 @@ jobs:
         run: go install github.com/google/ko@main
       - uses: sigstore/cosign-installer@main
       - name: login
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u $(echo ${{ github.actor }} | awk '{print tolower($0)}') --password-stdin
       - name: install carvel
         run: curl -L https://carvel.dev/install.sh | bash
       - name: build and sign image
-        run: kbld -f kbuild.yml | yq -r .image | COSIGN_EXPERIMENTAL=1 cosign sign -a git_sha=$GITHUB_SHA ghcr.io/dennisdenuto/hello-world-carvel
+        run: kbld -f kbuild.yml | yq .image | COSIGN_EXPERIMENTAL=1 cosign sign -a git_sha=$GITHUB_SHA ghcr.io/dennisdenuto/hello-world-carvel
