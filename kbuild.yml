@@ -1,0 +1,16 @@
+---
+image: hello-world-carvel
+
+---
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Config
+sources:
+  - image: hello-world-carvel
+    path: .
+    ko:
+      build:
+        rawOptions: ["--disable-optimizations"]
+destinations:
+  - image: hello-world-carvel
+    newImage: ghcr.io/dennisdenuto/hello-world-carvel
+
