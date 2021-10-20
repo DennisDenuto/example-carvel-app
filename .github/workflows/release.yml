@@ -27,4 +27,7 @@ jobs:
       - name: install carvel
         run: curl -L https://carvel.dev/install.sh | bash
       - name: build and sign image
-        run: kbld -f kbuild.yml | yq .image | COSIGN_EXPERIMENTAL=1 cosign sign -a git_sha=$GITHUB_SHA ghcr.io/dennisdenuto/hello-world-carvel
+        run: |
+          set -e -x
+          export COSIGN_EXPERIMENTAL=1
+          kbld -f kbuild.yml | yq eval '.image' - | xargs -n1 cosign sign -a git_sha=$GITHUB_SHA

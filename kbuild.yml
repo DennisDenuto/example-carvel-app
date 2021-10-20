@@ -12,5 +12,5 @@ sources:
         rawOptions: ["--disable-optimizations"]
 destinations:
   - image: hello-world-carvel
-    newImage: ghcr.io/dennisdenuto/hello-world-carvel
+    newImage: ghcr.io/dennisdenuto/hello-world-carvel-gh
 
