@@ -1,5 +1,18 @@
 ---
-image: hello-world-carvel
+apiVersion: v1
+kind: Pod
+metadata:
+  name: imgpkg-test
+spec:
+  containers:
+    - args:
+        - sh
+        - -c
+        - sleep
+        - infinity
+      image: hello-world-carvel
+      imagePullPolicy: Always
+      name: imgpkg-test
 
 ---
 apiVersion: kbld.k14s.io/v1alpha1

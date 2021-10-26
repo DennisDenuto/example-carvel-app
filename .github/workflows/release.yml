@@ -30,4 +30,4 @@ jobs:
         run: |
           set -e -x
           export COSIGN_EXPERIMENTAL=1
-          kbld -f kbuild.yml | yq eval '.image' - | xargs -n1 cosign sign -a git_sha=$GITHUB_SHA
+          kbld -f kbuild.yml | yq eval '.spec.containers[0].image' - | xargs -n1 cosign sign -a git_sha=$GITHUB_SHA
