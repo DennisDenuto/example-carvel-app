@@ -1,4 +1,6 @@
-on: [push, workflow_dispatch]
+on:
+  push:
+    tags: ["v*"]
 
 name: release
 
@@ -39,19 +41,7 @@ jobs:
           cosign sign-blob --output config.sig config.yml 2>&1 | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > config.crt
           cosign sign-blob --output images.sig images.yml 2>&1 | sed -n '/-----BEGIN CERTIFICATE-----/,/-----END CERTIFICATE-----/p' > images.crt
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          body: |
-            Changes in this Release
-            - Update image
-          draft: false
-          prerelease: false
-      - run: |
+        run: |
           set -x
           assets=()
           for asset in ./config.{yml,sig,crt} ./images.{yml,sig,crt}; do
