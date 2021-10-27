@@ -5,12 +5,7 @@ metadata:
   name: imgpkg-test
 spec:
   containers:
-    - args:
-        - sh
-        - -c
-        - sleep
-        - infinity
-      image: hello-world-carvel
+    - image: hello-world-carvel
       imagePullPolicy: Always
       name: imgpkg-test
 
